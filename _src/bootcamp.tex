@@ -1,0 +1,74 @@
+\documentclass{book}
+\pagestyle{headings}
+
+\usepackage[T1]{fontenc}
+\usepackage{minted}
+\usepackage{upquote}
+\AtBeginDocument{%
+\def\PYZsq{\textquotesingle}%
+}
+\usepackage{geometry}
+\geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1.2in,rmargin=1.2in}
+
+
+%-----------------------------------------------------------------------------
+% Special-purpose color definitions (dark enough to print OK in black and white)
+\usepackage{color}
+% A few colors to replace the defaults for certain link types
+\definecolor{orange}{cmyk}{0,0.4,0.8,0.2}
+\definecolor{darkorange}{rgb}{.71,0.21,0.01}
+\definecolor{darkgreen}{rgb}{.12,.54,.11}
+%-----------------------------------------------------------------------------
+% The hyperref package gives us a pdf with properly built
+% internal navigation ('pdf bookmarks' for the table of contents,
+% internal cross-reference links, web links for URLs, etc.)
+\usepackage{hyperref}
+\hypersetup{pdftex, % needed for pdflatex
+  breaklinks=true, % so long urls are correctly broken across lines
+  colorlinks=true,
+  urlcolor=blue,
+  linkcolor=darkorange,
+  citecolor=darkgreen,
+}
+
+
+\usepackage{url}
+%% Define a new 'leo' style for the package that will use a smaller font.
+\makeatletter
+\def\url@leostyle{%
+  \@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\small\ttfamily}}}
+\makeatother
+%% Now actually use the newly defined style.
+\urlstyle{leo}
+
+%% for inline R code: if the inline code is not correctly parsed, you will see a message
+\newcommand{\rinline}[1]{SOMETHING WRONG WITH knitr}
+%% begin.rcode setup, include=FALSE, cache=FALSE
+% opts_chunk$set(fig.path='figure/latex-', cache.path='cache/latex-', child.command='include')
+% read_chunk('src/memory.py')
+% read_chunk('src/randomwalk.py')
+%% end.rcode
+
+\title{Python bootcamp for the 2015 Berkeley Statistics Master's students}
+\date{January 18-19, 2015}
+\author{Jarrod Millman\\ UC Berkeley}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+%% begin.rcode child='python.tex'
+%% end.rcode
+
+%% begin.rcode child='numpy.tex'
+%% end.rcode
+
+%% begin.rcode child='image.tex'
+%% end.rcode
+
+%% begin.rcode child='advanced.tex'
+%% end.rcode
+
+\end{document}
+
