@@ -1,56 +1,816 @@
 \chapter{Python review}
 
+\begin{abstract}
+Brief review of basic Python. To begin, sign onto your GitHub account and fork
+the bootcamp repository: \url{https://github.com/jarrodmillman/python-bootcamp-2015}.
+
+Now from your BASH terminal clone your fork(ed) repository.  If you are using HTTP to
+authenticate, you will do something like this:
+\begin{verbatim}
+$ cd <to where you keep your source repositories>
+$ git clone  https://github.com/<you>/python-bootcamp-2015.git
+$ cd python-bootcamp-2015 
+\end{verbatim}
+For SSH authentication, do something like this:
+\begin{verbatim}
+$ cd <to where you keep your source repositories>
+$ git clone git@github.com:<you>/python-bootcamp-2015.git
+$ cd python-bootcamp-2015 
+\end{verbatim}
+\end{abstract}
+
 \section{Introduction}
-
-\subsection{Interpreter}
-\subsection{Variables}
-\subsection{Modules and files}
-
-References
 \begin{itemize}
-\item \url{https://docs.python.org}
+\item \url{https://docs.python.org/2/index.html}
+\item \url{https://docs.python.org/2/library/index.html}
 \item \url{https://scipy-lectures.github.io/}
+\item \url{http://software-carpentry.org/v4/python/}
+\item \url{https://docs.python.org/3/howto/pyporting.html}
 \end{itemize}
 
+\subsection{Interpreter}
 
-\section{Data Structures}
+For much of the bootcamp, you should type the example code snippets at an
+interactive Python terminal.  I recommend using either the IPython shell or the
+IPython notebook.  To start an IPython shell, type the following at a BASH
+prompt:
+\begin{minted}{bash}
+$ ipython
+\end{minted}
+To start an IPython notebook, type
+\begin{minted}{bash}
+$ ipython notebook
+\end{minted}
+
+\subsection{Objects}
+
+Everything is an object in Python.  Roughly, this means that it can be tagged
+with a variable and passed as an argument to a function.  Often it means that
+everything has \emph{attributes} and \emph{methods}.
+
+Certain objects in Python are mutable (e.g., lists, dictionaries), while other
+objects are immutable (e.g., tuples, strings, sets). Many objects can be
+composite (e.g., a list of dictionaries or a dictionary of lists, tuples, and
+strings).
+
+\subsection{Variables}
+
+Recall from last semester that variables are not their values in
+Python (think "I am not my name, I am the person named XXX"). You
+can think of variables as tags on objects. In particular, variables
+can be bound to an object of one type and then reassigned to an
+object of another type without error.
+
+\subsection{Modules, files, packages, import}
+
+While you will often explore things from an interactive Python prompt,
+you will save your code in files for reuse as well as to document what
+you've done.  You can use Python code saved in a plain text file from
+a Python prompt or other files by importing it.  Typically, this is
+done at the top of a file (if you are working at a prompt, you just
+need to import it before you want to use the functionality).
+
+Here are some examples of importing:
+\begin{minted}{python}
+import math
+from math import cos
+import numpy as np
+import scipy as sp
+import matplotlib.pyplot as plt
+\end{minted}
+
+\subsection{Style}
+
+Adopting standard coding conventions is good practice.
+\begin{itemize}
+\item \url{https://www.python.org/dev/peps/pep-0008/}
+\item \url{https://docs.python.org/2/tutorial/controlflow.html#intermezzo-coding-style}
+\item \url{https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt}
+\item \url{http://matplotlib.org/devel/coding_guide.html}
+\end{itemize}
+
+The first link above is the official "Style Guide for Python Code", usually
+referred to as PEP8 (PEP is an acronym for Python Enhancement Proposal).
+There are a couple of potentially helpful tools for helping you conform
+to the standard.  The \href{https://pypi.python.org/pypi/pep8}{pep8} package
+that provides a commandline tool to check your code against some of the
+PEP8 standard conventions.  Similarly, \href{https://pypi.python.org/pypi/autopep8}{autopep8}
+provides a tool to automatically format your code so that it conforms to
+the PEP8 standards. I have used both a little and they seem to work fairly
+well.
+
+The last two links discuss the NumPy docstring\footnote{Docstrings
+are an important part of a Python program:
+\begin{displayquote}
+A docstring is a string literal that occurs as the first
+statement in a module, function, class, or method definition.
+Such a docstring becomes the \_\_doc\_\_ special attribute of
+that object.
+All modules should normally have docstrings, and all
+functions and classes exported by a module should also
+have docstrings. Public methods (including the \_\_init\_\_
+constructor) should also have docstrings.
+
+--- https://www.python.org/dev/peps/pep-0257/
+\end{displayquote}
+Docstrings also allow for the use of doctests.
+\begin{displayquote}
+The doctest module searches for pieces of text that look
+like interactive Python sessions, and then executes those
+sessions to verify that they work exactly as shown.
+
+--- http://docs.python.org/2/library/doctest.html
+\end{displayquote}
+} standard. Let's briefly see how you might benefit from NumPy docstrings
+in practice.
+
+\begin{minted}{python}
+In [1]: import numpy as np
+
+In [2]: np.ndim?
+Type:        function
+String form: <function ndim at 0x7fcabd864938>
+File:        /usr/lib64/python2.7/site-packages/numpy/core/fromnumeric.py
+Definition:  np.ndim(a)
+Docstring:
+Return the number of dimensions of an array.
+
+Parameters
+----------
+a : array_like
+    Input array.  If it is not already an ndarray, a conversion is
+    attempted.
+
+Returns
+-------
+number_of_dimensions : int
+    The number of dimensions in `a`.  Scalars are zero-dimensional.
+
+See Also
+--------
+ndarray.ndim : equivalent method
+shape : dimensions of array
+ndarray.shape : dimensions of array
+
+Examples
+--------
+>>> np.ndim([[1,2,3],[4,5,6]])
+2
+>>> np.ndim(np.array([[1,2,3],[4,5,6]]))
+2
+>>> np.ndim(1)
+0
+\end{minted}
+
+\subsubsection{Exercises}
+\begin{itemize}
+\item What happens if you type \texttt{np.ndim??}?
+\item Type \texttt{np.tril?} at an IPython prompt. What does \texttt{np.tril} do?
+\item Type \texttt{np.ndarray?} at an IPython prompt. Briefly skim the docstring.
+  \texttt{ndarray} is the basic datastructure provided by NumPy. We will examine it
+  in much more detail in the next chapter.
+\item Type \texttt{np.} followed by the \texttt{<Tab>} key at an IPython prompt.
+  Choose two or three of the completions and use \texttt{?} to view their
+  docstrings.  In particular, pay attention to the examples provided near
+  the end of the docstring and see whether you can figure out how you might
+  use this functionality.  Use on them as well.
+\end{itemize}
+
+\subsection{Python 2 vs. 3}
+
+Python 3 is a new version of Python, which is incompatible with Python 2.
+We will use Python 2 in this bootcamp, but Python 3 is the future.  Due
+to the large installed codebase of Python 2, the transition will take years.
+
+If you are writing new Python code at this point, require Python 2.7 as the
+minimum support version.  You should also import the following functionality
+from the \texttt{\_\_future\_\_} module.
+
+\begin{minted}{python}
+from __future__ import (absolute_import,
+                        division,
+                        print_function,
+                        unicode_literals)
+\end{minted}
+
+While we will be using Python 2 for this bootcamp, in the near future you may
+consider using the \texttt{future}
+package.\footnote{\url{https://pypi.python.org/pypi/future}} The idea is that
+by using this package and adding a few imports to the top of your Python
+modules you can write "predominantly standard, idiomatic Python 3 code that
+then runs similarly on Python 2.6/2.7 and Python 3.3+."
+
+\section{\label{sec:datastructures}Data Structures}
+\begin{itemize}
+\item \url{https://docs.python.org/2/library/stdtypes.html}
+\item \url{https://docs.python.org/2/tutorial/datastructures.html}
+\item \url{https://docs.python.org/2/reference/datamodel.html}
+\end{itemize}
 
 \subsection{Numbers}
 
+Python has integers, floats, and complex numbers with the usual
+operations (beware: division).
+
+\begin{minted}{python}
+In [1]: 2/3
+Out[1]: 0
+
+In [2]: from __future__ import division
+
+In [3]: 2/3
+Out[3]: 0.6666666666666666
+
+In [4]: x = 1.1
+
+In [5]: x.
+x.as_integer_ratio  x.hex               x.real
+x.conjugate         x.imag              
+x.fromhex           x.is_integer        
+
+In [5]: x * 2
+Out[5]: 2.2
+
+In [6]: x**2
+Out[6]: 1.2100000000000002
+
+In [7]: 100000**10
+Out[7]: 100000000000000000000000000000000000000000000000000L
+
+In [8]: 100000**100
+Out[8]: 10000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000L
+
+In [9]: cos(0)
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+<ipython-input-6-edaadd132e03> in <module>()
+----> 1 cos(1)
+
+NameError: name 'cos' is not defined
+
+In [10]: import math
+
+In [11]: math.cos(0)
+Out[11]: 1.0
+
+In [12]: math.cos(math.pi)
+Out[12]: -1.0
+
+In [13]: (type(1), type(1.1), type(1+2j))
+Out[13]: (int, float, complex)
+\end{minted}
+
+The above line is an example of a composite object called a tuple, which
+we will discuss more in §~\ref{subsec:tuples} below. At an IPython prompt,
+use \texttt{type?} to see what \texttt{type} does.
+
+The \texttt{math} package in the standard library includes many additional
+numerical operations.
+
+\begin{minted}{python}
+In [14]: math.
+math.acos       math.degrees    math.fsum       math.pi
+math.acosh      math.e          math.gamma      math.pow
+math.asin       math.erf        math.hypot      math.radians
+math.asinh      math.erfc       math.isinf      math.sin
+math.atan       math.exp        math.isnan      math.sinh
+math.atan2      math.expm1      math.ldexp      math.sqrt
+math.atanh      math.fabs       math.lgamma     math.tan
+math.ceil       math.factorial  math.log        math.tanh
+math.copysign   math.floor      math.log10      math.trunc
+math.cos        math.fmod       math.log1p      
+math.cosh       math.frexp      math.modf
+\end{minted}
+
+\subsubsection{Exercises}
+Using the section on "Built-in Types" from the official "The Python
+Standard Library" reference (follow the first link at the top
+of §~\ref{sec:datastructures}), figure out how to compute:
+\begin{enumerate}
+\item $3 \le 4$,
+\item $3 \mod 4$,
+\item $|-4|$,
+\item $\left(\ceil{\frac{3}{4}}\times4\right)^3 \mod{2}$, and
+\item $\sqrt{-1}$.
+\end{enumerate}
+
+\subsubsection{Questions}
+\begin{enumerate}
+\item How do you get the list of completions for \texttt{x.}?
+\item What is the difference in the old and new behavior of division?
+\item Read the "Truth Value Testing" and "Boolean Operations" subsections
+  at the top of the "Built-in Types" section of the Library reference.
+  How does this compare to how R handles things?
+\end{enumerate}
+
+\subsection{Strings}
+
+Strings are immutable sequences of (zero or more) characters.
+
+\subsubsection{Sequences}
+Unlike numbers, strings a Python container object.  Specifically, it is a
+sequence.  Python has several sequence types including strings, tuples, and
+lists.  Sequence types share some common functionality.
+
+\begin{itemize}
+
+\item \textbf{Indexing}
+To see how indexing works in Python let's use the string containing the digits
+0 through 9.
+\begin{minted}{python}
+In [1]: import string
+
+In [2]: string.digits
+Out[2]: '0123456789'
+
+In [3]: string.digits[1]
+Out[3]: '1'
+
+In [4]: string.digits[-1]
+Out[4]: '9'
+\end{minted}
+Note that indexing starts at 0 (unlike R and Fortran, but like C).  Also negative
+integers index starting from the end of the sequence. You can find the length of
+a sequence using the \texttt{len()} function.
+
+\item \textbf{Slicing}
+Slicing allows you to select a subset of a string (or any sequence) by specifying
+start and stop indices as well as a step, which you specify using the
+\texttt{start:stop:step} notation inside of square braces.
+\begin{minted}{python}
+In [5]: string.digits[1::2]
+Out[5]: '13579'
+
+In [6]: string.digits[9::-1]
+Out[6]: '9876543210'
+\end{minted}
+
+\item \textbf{Subsequence testing}
+\begin{minted}{python}
+In [7]: '23' in string.digits
+Out[7]: True
+
+In [16]: '25' not in string.digits
+Out[16]: True
+\end{minted}
+\end{itemize}
+
+\subsubsection{String methods}
 \begin{minted}{python}
 In [1]: string1 = "my string"
 
+In [2]: string1.
+string1.capitalize  string1.islower     string1.rpartition
+string1.center      string1.isspace     string1.rsplit
+string1.count       string1.istitle     string1.rstrip
+string1.decode      string1.isupper     string1.split
+string1.encode      string1.join        string1.splitlines
+string1.endswith    string1.ljust       string1.startswith
+string1.expandtabs  string1.lower       string1.strip
+string1.find        string1.lstrip      string1.swapcase
+string1.format      string1.partition   string1.title
+string1.index       string1.replace     string1.translate
+string1.isalnum     string1.rfind       string1.upper
+string1.isalpha     string1.rindex      string1.zfill
+string1.isdigit     string1.rjust       
+
 In [2]: string1.upper()
 Out[2]: 'MY STRING'
+
+In [3]: string1.upper?
+Type:        builtin_function_or_method
+String form: <built-in method upper of str object at 0x7fa136f8ced0>
+Docstring:
+S.upper() -> string
+
+Return a copy of the string S converted to uppercase.
+
+In [4]: string1 + " is your string."
+Out[4]: 'my string is your string.'
+
+In [5]: "*"*10
+Out[5]: '**********'
+
+In [6]: string1[3:]
+Out[6]: 'string'
+
+In [7]: string1[3:4] 
+Out[7]: 's'
+
+In [8]: string1[4::2]
+Out[8]: 'tig'
+
+In [9]: string1[3:5] = 'ts'
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-12-d7a58dc91703> in <module>()
+----> 1 string1[3:5] = 'ts'
+
+TypeError: 'str' object does not support item assignment
+
+In [10]: string1.__
+string1.__add__           string1.__len__
+string1.__class__         string1.__lt__
+string1.__contains__      string1.__mod__
+string1.__delattr__       string1.__mul__
+string1.__doc__           string1.__ne__
+string1.__eq__            string1.__new__
+string1.__format__        string1.__reduce__
+string1.__ge__            string1.__reduce_ex__
+string1.__getattribute__  string1.__repr__
+string1.__getitem__       string1.__rmod__
+string1.__getnewargs__    string1.__rmul__
+string1.__getslice__      string1.__setattr__
+string1.__gt__            string1.__sizeof__
+string1.__hash__          string1.__str__
+string1.__init__          string1.__subclasshook__
 \end{minted}
 
-\subsection{Strings}
-\subsection{Tuples}
+\subsubsection{Exercises}
+At an interactive Python prompt, type \texttt{x = "The ant wants what all ants want."}.
+Using string indexing, slicing, subsequence testing, and methods, solve the following:
+\begin{enumerate}
+\item Convert the string to all lower case letters (don't change x).
+\item Count the number of occurrences of the substring \texttt{"ant"}.
+\item Create a list of the words occurring in \texttt{x}.  Make sure
+  to remove punctuation and convert all words to lowercase.
+\item Using only string methods on \texttt{x}, create the following string:
+  \texttt{"The chicken wants what all chickens want."}
+\item Using indexing and the \texttt{+} operator, create the following string:
+  \texttt{"The tna wants what all ants want."}
+\item Do the same thing except using a string method instead.
+\end{enumerate}
+
+\subsubsection{Questions}
+\begin{enumerate}
+\item How do the string method's \texttt{split} and \texttt{rsplit} differ?
+  [Hint: use \texttt{?} to view the method's docstrings.]
+\item What happens when you multiple a string by a number?  How does this
+  relate to the string method \texttt{\_\_mul\_\_}?  [Hint: look at the
+  docstring.]
+\item How does the \texttt{len()} function know how to find the length of
+  a sequence?
+\item How do the \texttt{in} and \texttt{not in} operators work?
+\end{enumerate}
+
+\subsection{\label{subsec:tuples}Tuples}
+
+Tuples are immutable sequences of (zero or more) objects. Functions in Python
+often return tuples.
+
+\begin{minted}{python}
+In [1]: x = 1; y = 2
+
+In [2]: xy = (x, y)
+
+In [3]: xy
+Out[3]: (1, 2)
+
+In [4]: xy[1]
+Out[4]: 2
+
+In [5]: xy[1] = 3
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-7-b22951f8a33e> in <module>()
+----> 1 xy[1] = 3
+
+TypeError: 'tuple' object does not support item assignment
+
+In [6]: (x, y)
+Out[6]: (1, 2)
+
+In [7]: x, y
+Out[7]: (1, 2)
+\end{minted}
+
+\subsubsection{Exercises}
+\begin{enumerate}
+\item Note that \texttt{x, y} and \texttt{(x, y)} both print the same string.
+  To see why that is assign them to variables and check their type.
+\item Create the following \texttt{x=5} and \texttt{y=6}. Now swap their values.
+  (How would you do this in R?)
+\end{enumerate}
+
 \subsection{List}
+
+Lists are mutable sequences of (zero or more) objects.
+
+\begin{minted}{python}
+In [1]: dice = [1, 2, 3, 4, 5, 6]
+
+In [2]: dice[1::2]
+Out[2]: [2, 4, 6]
+
+In [3]: dice[1::2] = dice[::2]
+
+In [4]: dice
+Out[4]: [1, 1, 3, 3, 5, 5]
+
+In [5]: dice*2
+Out[5]: [1, 1, 3, 3, 5, 5, 1, 1, 3, 3, 5, 5]
+
+In [6]: dice+dice[::-1]
+Out[6]: [1, 1, 3, 3, 5, 5, 5, 5, 3, 3, 1, 1]
+
+In [7]: 1 in dice
+Out[7]: True
+\end{minted}
+
+\subsubsection{Exercises}
+\begin{enumerate}
+\item Create a list of numbers.  Reverse the order of the items in the list
+  using slicing.  Now reverse the order of the items using a list method.
+  How does using the method differ from slicing?  Do you think you think
+  tuples have a method to reverse the order of its items?  Why or why not?
+  Check to see if you are correct or not.
+\item Using a list method sort your numbers.  Create a list of strings and
+  sort it.  Put your list of numbers and strings together in one list and
+  sort it.  What happened?
+\end{enumerate}
+
+
 \subsection{Dictionaries}
+
+Dictionaries are mutable, unordered collections of key-value pairs.
+
+\begin{minted}{python}
+In [99]: students = {"Jarrod Millman": [10, 11, 9],
+   ....:             "Thomas Kluyver":  [11, 9, 10],
+   ....:             "Stefan van der Walt": [12, 9, 9]}
+
+In [100]: students
+Out[100]: 
+{'Jarrod Millman': [10, 11, 9],
+ 'Stefan van der Walt': [12, 9, 9],
+ 'Thomas Kluyver': [11, 9, 10]}
+
+In [102]: students.keys()
+Out[102]: ['Thomas Kluyver', 'Stefan van der Walt', 'Jarrod Millman']
+
+In [103]: students["Jarrod Millman"]
+Out[103]: [10, 11, 9]
+
+In [104]: students["Jarrod Millman"][1]
+Out[104]: 11
+\end{minted}
+
 \subsection{Sets}
 
+Sets are immutable, unordered collections of unique elements.
+
+\begin{minted}{python}
+In [1]: x =  {1, 2, 4, 1, 4}
+
+In [2]: x
+Out[2]: {1, 2, 4}
+
+In [3]: x.
+x.add                          x.issubset
+x.clear                        x.issuperset
+x.copy                         x.pop
+x.difference                   x.remove
+x.difference_update            x.symmetric_difference
+x.discard                      x.symmetric_difference_update
+x.intersection                 x.union
+x.intersection_update          x.update
+x.isdisjoint                   
+\end{minted}
+
+\subsection{And more}
+
+\begin{minted}{python}
+In [1]: import collections
+
+In [2]: collections.
+collections.Callable         collections.MutableSequence
+collections.Container        collections.MutableSet
+collections.Counter          collections.OrderedDict
+collections.Hashable         collections.Sequence
+collections.ItemsView        collections.Set
+collections.Iterable         collections.Sized
+collections.Iterator         collections.ValuesView
+collections.KeysView         collections.defaultdict
+collections.Mapping          collections.deque
+collections.MappingView      collections.namedtuple
+collections.MutableMapping   
+\end{minted}
+
+\section{Built-in functions}
+\begin{itemize}
+\item \url{https://docs.python.org/2/library/functions.html}
+\end{itemize}
+
+Python has several built-in functions (you can find a full list using the link
+above).  We've already used a few (e.g., \texttt{len(), type(), print()}).
+Here are a few more that we you will find useful.
+
+\subsection{zip}
+\begin{minted}{python}
+In [108]: zip([1, 2], ["a", "b"])
+Out[108]: [(1, 'a'), (2, 'b')]
+\end{minted}
+
+\subsection{enumerate}
+\begin{minted}{python}
+In [109]: enumerate(["a", "b"])
+Out[109]: <enumerate at 0x7f5e3e018640>
+
+In [110]: list(enumerate(["a", "b"]))
+Out[110]: [(0, 'a'), (1, 'b')]
+\end{minted}
+
+\subsubsection{Question}
+\begin{itemize}
+\item What do the built-in functions \texttt{abs()}, \texttt{all()},
+  \texttt{any()}, \texttt{dict()}, \texttt{dir()}, \texttt{id()},
+  \texttt{list()}, and \texttt{set()} do?  Make sure to use
+  \texttt{?} from the IPython prompt as well as looking at the documentation
+  in the official Python Standard Library reference (use the above link).
+\end{itemize}
+
 \section{Control flow}
+\begin{itemize}
+\item \url{https://docs.python.org/2/tutorial/controlflow.html}
+\end{itemize}
 
 \subsection{If-then-else}
-\subsection{For-loops}
-\subsection{While-loops}
+\begin{itemize}
+\item \url{https://docs.python.org/2/tutorial/controlflow.html#if-statements}
+\end{itemize}
 
-\section{Advanced topics}
+\begin{minted}{python}
+In [44]: x = 2
 
-\subsection{Comprehension}
+In [45]: if x < 2:
+   ....:     print("Yes")
+   ....: else:
+   ....:     print("No")
+   ....:     
+No
+\end{minted}
+
+\subsection{For-loops (and list comprehension)}
+\begin{itemize}
+\item \url{https://docs.python.org/2/tutorial/controlflow.html#for-statements}
+\item \url{https://docs.python.org/2/whatsnew/2.0.html#list-comprehensions}
+\end{itemize}
+
+\begin{minted}{python}
+In [49]: for x in [1,2,3,4]:
+   ....:     print(x)
+   ....:     
+1
+2
+3
+4
+
+In [50]: for x in [1,2,3,4]:
+   ....:      print(x, end="")
+   ....:     
+1234
+\end{minted}
+
+Building up a list piece-by-piece is a common task, which can easily be
+done in a for-loop.  List comprehension provide a compact syntax to
+handle this task.
+
+\begin{minted}{python}
+In [64]: x = [1, 2, 3, 4]
+
+In [65]: zip(x, x[::-1])
+Out[65]: [(1, 4), (2, 3), (3, 2), (4, 1)]
+
+In [66]: [y for y in zip(x, x[::-1]) if y[0] > y[1]]
+Out[66]: [(3, 2), (4, 1)]
+\end{minted}
+\subsubsection{Exercises}
+\begin{itemize}
+\item Write a for-loop that produces \texttt{[(3, 2), (4, 1)]} from \texttt{x}.
+  How does it compare to the list comprehension above?
+\item Use \texttt{print?} to see what the \texttt{end} argument to the print
+  function does.  Are there any additional arguments to \texttt{print()}?
+  If so, try using the additional arguments.
+\item Find the section on the \texttt{range()} function in Python tutorial.
+  Rewrite the two for-loops above using it rather than explicitly constructing
+  the list of numbers.
+\end{itemize}
+
 \subsection{Functions}
-\subsection{Context managers}
+\begin{itemize}
+\item \url{https://docs.python.org/2/tutorial/controlflow.html#defining-functions}
+\end{itemize}
 
+\begin{minted}{python}
+In [105]: def add(x, y):
+   .....:     return x+y
+   .....: 
+
+In [106]: add(2, 3)
+Out[106]: 5
+
+In [105]: def add(x, y=1):
+   .....:     return x+y
+   .....:
+
+In [106]: add(3)
+Out[106]: 4
+\end{minted}
+
+\section{Exercise: DNA}
+
+For this exercise, please see \texttt{ex1/dna.py}.
+
+\section{Classes}
+\begin{itemize}
+\item \url{https://docs.python.org/2/tutorial/classes.html}
+\end{itemize}
+
+\begin{minted}{python}
+In [224]: class Rectangle(object):
+   .....:     def __init__(self, height, width):
+   .....:         self.height = height
+   .....:         self.weight = width
+   .....:     def __repr__(self):
+   .....:         return "{0} by {1}".format(self.height, self.width)
+   .....:     def area(self):
+   .....:         return self.height*self.width
+   .....:     
+
+In [225]: x = Rectangle(10,5)
+
+In [228]: x
+Out[228]: 10 by 5
+
+In [229]: x.area()
+Out[229]: 50
+\end{minted}
+
+\section{Exercise: Cipher}
+
+For this exercise, please see \texttt{ex2/cipher.py}.
 
 \section{Data formats}
 
 \subsection{CSV}
+\begin{itemize}
+\item \url{https://docs.python.org/2/library/csv.html}
+\end{itemize}
+
+The Python standard library provides a package for reading and writing CSV
+files.  This is a somewhat low-level library, so in practice you will
+often use NumPy, SciPy, or Pandas CSV functionality.
 
 \subsection{JSON}
+\begin{itemize}
+\item \url{https://docs.python.org/2/library/json.html}
+\end{itemize}
 
+However the JSON package in the standard library is much more useful.
+
+\begin{minted}{python}
+In [182]: import json
+
+In [183]: x = {"name": "Jarrod", "department": "Biostatistics"}
+
+In [186]: with open("tmp.json", "w") as outfile: 
+   .....:     json.dump(x, outfile)
+   .....:     
+
+In [187]: cat tmp.json
+{"department": "Biostatistics", "name": "Jarrod"}
+
+In [192]: with open("tmp.json") as infile:
+   .....:     y = json.load(infile)
+   .....:     
+
+In [193]: y
+Out[193]: {u'department': u'Biostatistics', u'name': u'Jarrod'}
+\end{minted}
+
+Note that \texttt{cat} is not a Python statement.  IPython is clever enough to
+quess that you want it to call out to the underlying operating system.
+
+\subsubsection{Exercise}
+\begin{itemize}
+\item One of the nice things above the JSON format is that it so well
+  structured that it easy for a machine to parse, but simple enough
+  that it easy for humans to read. By default \texttt{json.dump}
+  writes everything out to disk without line breaks.  For readability
+  purposes, use \texttt{json.dump?} to figure out how to pretty-print
+  the text as well as sort it alphabetically by key.
+\end{itemize}
 \subsection{HTML}
 
+We will use Thomas Kluyver's web scraping example notebook for this section.
+You can view a rendered version of it
+\href{http://nbviewer.ipython.org/github/dlab-berkeley/python-fundamentals/blob/master/cheat-sheets/Web-Scraping.ipynb}{here}.
+To get an interactive version of it, you can do the following from your BASH prompt:
 
 \begin{verbatim}
 $ git clone https://github.com/dlab-berkeley/python-fundamentals.git
@@ -58,15 +818,68 @@ $ cd python-fundamentals/cheat-sheets/
 $ ipython notebook Web-Scraping.ipynb
 \end{verbatim}
 
-
-%\href{https://github.com/dlab-berkeley/python-fundamentals/blob/master/cheat-sheets/Web-Scraping.ipynb}{IPython notebook}
-%(\href{http://nbviewer.ipython.org/github/dlab-berkeley/python-fundamentals/blob/master/cheat-sheets/Web-Scraping.ipynb}{Rendered version})
-
 \section{Standard library}
+\begin{itemize}
+\item \url{https://docs.python.org/2/tutorial/stdlib.html}
+\end{itemize}
+
+\subsection{Batteries included}
+Python provides a wealth of functionality in its huge standard library.
+We've already seen several (e.g., math, csv, json). If you need some functionality
+the standard library is one of the first places to look.
+
+Here are a couple packages that you may find useful.
+
+\subsection{os}
+\begin{itemize}
+\item \url{https://docs.python.org/2/tutorial/stdlib.html#operating-system-interface}
+\end{itemize}
+
+\begin{minted}{python}
+In [147]: import os
+
+In [148]: os.getcwd()
+Out[148]: '/home/jarrod'
+
+In [149]: pwd
+Out[149]: u'/home/jarrod'
+\end{minted}
+
+\subsubsection{Exercise}
+\begin{itemize}
+\item Use \texttt{os?} and \texttt{dir(os)} to explore the os package.
+\end{itemize}
 
 \subsection{re}
+\begin{itemize}
+\item \url{https://docs.python.org/2/howto/regex.html}
+\end{itemize}
 
-\section{Exercise}
+The \texttt{re} package provides support for regular expressions.
 
+\section{Exercise: State of the Union addresses}
 
+For this exercise, you will revisit the State of the Union Addresses, which you
+worked with in Statistics 243 (problem set 3).
 
+I've provided a Python script (\texttt{ex3/munge.py}) that scraps the web,
+processes the speeches, and saves the processed information to a JSON file
+(\texttt{ex3/speeches.json}).
+
+You should write a Python script\footnote{You will probably need to explore the
+data interactively from and IPython prompt and in tandem write your script} to:
+\begin{enumerate}
+\item Load the data from the JSON file.
+\item Count the number of speeches (you may need to do some data cleaning).
+\item Create a list with just the names of the presidents.
+\item Create a list with just the dates of the speeches.
+\item Write a function that takes a speech object a returns the tuple
+  \texttt{(<president>, <number of words>, <date>)}
+\item Create a list of tuples by calling your function on all the speech objects.
+\item Create a list of the speech dates sorted based on the length of speech.
+\end{enumerate}
+
+For the last task you may want to take a look at the Python Sorting How To:
+\begin{itemize}
+\item \url{https://wiki.python.org/moin/HowTo/Sorting}
+\end{itemize}

@@ -1,7 +1,11 @@
 \documentclass{book}
 \pagestyle{headings}
-
+\usepackage{amsmath}
 \usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\usepackage{csquotes}
+
 \usepackage{minted}
 \usepackage{upquote}
 \AtBeginDocument{%
@@ -32,6 +36,7 @@
 }
 
 
+\usepackage{hyperref}
 \usepackage{url}
 %% Define a new 'leo' style for the package that will use a smaller font.
 \makeatletter
@@ -45,11 +50,16 @@
 \newcommand{\rinline}[1]{SOMETHING WRONG WITH knitr}
 %% begin.rcode setup, include=FALSE, cache=FALSE
 % opts_chunk$set(fig.path='figure/latex-', cache.path='cache/latex-', child.command='include')
+% read_chunk('../stateoftheunion/munge.py')
 % read_chunk('src/memory.py')
 % read_chunk('src/randomwalk.py')
 %% end.rcode
 
-\title{Python bootcamp for the 2015 Berkeley Statistics Master's students}
+\providecommand{\ceil}[1]{\left \lceil #1 \right \rceil }
+
+\newenvironment{abstract}{\rightskip1in\itshape}{}
+
+\title{Scientific Python bootcamp \\2015 Berkeley Statistics Masters program}
 \date{January 18-19, 2015}
 \author{Jarrod Millman\\ UC Berkeley}
 

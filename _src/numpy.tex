@@ -1,22 +1,60 @@
-\chapter{NumPy, SciPy, matplolib}
+\chapter{NumPy, SciPy, and matplolib}
+
+\begin{abstract}
+Explore Python's core numerical, scientific, and plotting packages. For background
+see:
+\begin{itemize}
+\item Fernando Pérez, Brian E. Granger, and John D. Hunter. "Python: an ecosystem for
+scientific computing." \emph{Computing in Science \& Engineering} 13, no. 2 (2011):
+13-21.
+\item Stéfan van der Walt, S. Chris Colbert, and Gael Varoquaux. "The NumPy array: a
+structure for efficient numerical computation." \emph{Computing in Science \&
+Engineering} 13, no. 2 (2011): 22-30.
+\item John D. Hunter. "Matplotlib: A 2D graphics environment." \emph{Computing
+in Science \& Engineering} 9, no. 3 (2007): 0090-95.
+\end{itemize}
+\end{abstract}
 
 \section{Introduction}
-
-References
 \begin{itemize}
 \item \url{https://scipy-lectures.github.io/}
 \item \url{http://docs.scipy.org/doc/}
 \end{itemize}
 
-\section{NumPy}
-\section{SciPy}
-\section{matplotlib}
-\section{Random walk redux}
+\section{NumPy and matplotlib}
+
+\subsection{ndarray: the fundamental datastructure for scientific computing}
+\subsection{indexing, fancy indexing, and slicing}
+\subsection{2D plotting}
+\subsection{basic operations}
+
+\section{Example: random walk redux}
 
 %% begin.rcode p1, engine='python'
 %% end.rcode
 
 %% begin.rcode p2, engine='python'
 %% end.rcode
+
+\subsection{Exercise}
+Write a Python script to construct Sierpinski Gasket using the following
+algorithm:
+
+\begin{enumerate}
+\item Choose 3 points in the plane (forming a triangle).
+\item Choose another "starting" pointing (current position).
+\item Randomly choose one of the corners of the triangle.
+\item Move halfway from your current position to the selected corner.
+\item Plot the new current position.
+\item Repeat from step 3 (for 100 times).
+\end{enumerate}
+
+\section{SciPy}
+
+\subsection{scipy.io}
+\subsection{scipy.signal}
+\subsection{scipy.stats}
+\subsection{scipy.linalg}
+\subsection{scipy.optimize}
 
 \section{Exercise}
