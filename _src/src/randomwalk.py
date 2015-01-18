@@ -13,9 +13,9 @@ def random_2d_walk(nsteps=100):
     steps = np.random.choice(code.keys(), nsteps)
     walk = np.array([code[step] for step in steps])
     xy = walk.cumsum(axis=0)
-    return (xy, walk)
+    return xy
 
-xy, = random_2d_walk()
+xy = random_2d_walk()
 plt.plot(xy[:,0], xy[:,1])
 plt.savefig("test.png")
 

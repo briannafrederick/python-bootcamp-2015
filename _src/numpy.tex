@@ -1,8 +1,8 @@
 \chapter{NumPy, SciPy, and matplolib}
 
 \begin{abstract}
-Explore Python's core numerical, scientific, and plotting packages. For background
-see:
+Introduce Python's core numerical, scientific, and plotting packages.
+
 \begin{itemize}
 \item Fernando Pérez, Brian E. Granger, and John D. Hunter. "Python: an ecosystem for
 scientific computing." \emph{Computing in Science \& Engineering} 13, no. 2 (2011):
@@ -17,8 +17,10 @@ in Science \& Engineering} 9, no. 3 (2007): 0090-95.
 
 \section{Introduction}
 \begin{itemize}
-\item \url{https://scipy-lectures.github.io/}
 \item \url{http://docs.scipy.org/doc/}
+\item \url{http://matplotlib.org/gallery.html}
+\item \url{https://scipy-lectures.github.io/}
+\item \url{https://github.com/ipython/ipython/wiki/A-gallery-of-interesting-IPython-Notebooks}
 \end{itemize}
 
 \section{NumPy and matplotlib}
@@ -46,14 +48,18 @@ lock 'n load.
 
 \section{Example: random walk redux}
 
+Recall the random walk simulation from 243.
+
 %% begin.rcode p1, engine='python'
 %% end.rcode
+
+Here is a version implemented as a class.
 
 %% begin.rcode p2, engine='python'
 %% end.rcode
 
-\subsection{Exercise: Sierpinski Gasket}
-Write a Python script to construct Sierpinski Gasket using the following
+\subsection{Exercise: Sierpinski triangle}
+Write a Python script to construct Sierpinski triangle using the following
 algorithm:
 
 \begin{enumerate}
@@ -73,8 +79,6 @@ algorithm:
 
 \section{Exercise: State of the Union addresses}
 
-For this exercise, you will revisit the State of the Union Addresses again.
-
-You should write a Python script 3 to:
-
-
+For this exercise, you will revisit the State of the Union Addresses.
+Load the data, use whatever tools and analysis you want, and use matplotlib
+to make plots.

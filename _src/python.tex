@@ -164,7 +164,7 @@ Examples
 
 \subsubsection{Exercises}
 \begin{itemize}
-\item What happens if you type \texttt{np.ndim??}?
+\item What happens if you type \texttt{np.ndim??} (i.e., use two question marks)?
 \item Type \texttt{np.tril?} at an IPython prompt. What does \texttt{np.tril} do?
 \item Type \texttt{np.ndarray?} at an IPython prompt. Briefly skim the docstring.
   \texttt{ndarray} is the basic datastructure provided by NumPy. We will examine it
@@ -313,9 +313,10 @@ of §~\ref{sec:datastructures}), figure out how to compute:
 Strings are immutable sequences of (zero or more) characters.
 
 \subsubsection{Sequences}
-Unlike numbers, strings a Python container object.  Specifically, it is a
+Unlike numbers, Python strings are container objects.  Specifically, it is a
 sequence.  Python has several sequence types including strings, tuples, and
-lists.  Sequence types share some common functionality.
+lists.  Sequence types share some common functionality, which we can
+demonstrate with strings.
 
 \begin{itemize}
 
@@ -699,6 +700,15 @@ Out[66]: [(3, 2), (4, 1)]
 \item Find the section on the \texttt{range()} function in Python tutorial.
   Rewrite the two for-loops above using it rather than explicitly constructing
   the list of numbers.
+\item See what \texttt{[1, 2, 3] + 3} returns. Try to explain what happened
+and why.  In R, when you add a scalar to a vector the result is the
+element-wise addition.
+\begin{minted}{r}
+> 3 + c(1,2,3)
+[1] 4 5 6
+\end{minted}
+Use list comprehension to perform element-wise addition of a scalar to a list
+of scalars.
 \end{itemize}
 
 \subsection{Functions}
